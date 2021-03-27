@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from './context'
 import Navbar from './components/layout/Navbar/Navbar'
 import HomePage from './components/layout/HomePage/HomePage'
+import Lyrics from './components/tracks/Lyrics/Lyrics'
 
 function App() {
   return (
@@ -12,9 +13,8 @@ function App() {
         <Navbar />
         <div className={'container'}>
           <Switch>
-            <Route exact path={'/'}>
-              <HomePage />
-            </Route>
+            <Route exact path={'/'} component={HomePage}/>
+            <Route path={'/lyrics/track/:trackId'} component={Lyrics}/>
           </Switch>
         </div>
       </Router>
