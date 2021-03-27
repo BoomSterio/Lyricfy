@@ -1,12 +1,14 @@
 import React from 'react'
 import Tracks from '../../tracks/Tracks/Tracks'
+import Search from '../../tracks/Search/Search'
 
-const HomePage = () => {
+const Index = () => {
   return (
     <div>
+      <Search/>
       <Tracks/>
     </div>
   )
 }
 
-export default HomePage
+export default Index
