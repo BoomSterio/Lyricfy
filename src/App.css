@@ -16,3 +16,11 @@ body {
   color: lightgreen;
   filter: contrast(0.8);
 }
+
+.track-artist {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
