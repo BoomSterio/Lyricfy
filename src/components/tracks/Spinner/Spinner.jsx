@@ -1,7 +1,7 @@
 import React from 'react'
 import spinner from '../../../assets/images/spinner.gif'
 
-const MyComponent = () => {
+const Spinner = () => {
   return (
     <img
       src={spinner}
@@ -11,4 +11,4 @@ const MyComponent = () => {
   )
 }
 
-export default MyComponent
+export default Spinner

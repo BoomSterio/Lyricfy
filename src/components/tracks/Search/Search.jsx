@@ -21,7 +21,7 @@ const Search = () => {
 
     axios
       .get(
-        `https://thingproxy.freeboard.io/fetch/https://api.musixmatch.com/ws/1.1/track.search?q${searchBy}=${query}&page_size=10&page=1&s_track_rating=desc&apikey=${process.env.REACT_APP_MM_KEY}`
+        `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?q${searchBy}=${query}&page_size=10&page=1&s_track_rating=desc&apikey=${process.env.REACT_APP_MM_KEY}`
       )
       .then(res => {
         if(res.data.message.body.track_list.length === 0) alert('Nothing was found')
