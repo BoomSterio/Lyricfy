@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Track = ({ track }) => {
+const Track = React.memo(({ track }) => {
   return (
     <div className={'col-md-6'}>
       <div className="card mb-4 shadow-sm">
-        <div className={'card-body'}>
-          <h4>{track.artist_name}</h4>
+        <div className={'card-body'} style={{height: '200px'}}>
+          <h4 className={'track-artist'}>{track.artist_name}</h4>
           <p className="card-text">
             <strong><i className={'fas fa-play'} /> Track</strong>: {track.track_name}
             <br/>
@@ -19,6 +19,6 @@ const Track = ({ track }) => {
       </div>
     </div>
   )
-}
+})
 
 export default Track
