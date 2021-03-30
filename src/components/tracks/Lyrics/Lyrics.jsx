@@ -1,33 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import axios from 'axios'
 import Spinner from '../Spinner/Spinner'
 import moment from 'moment'
+import { DispatchContext, StateContext } from '../../../context'
+import { getLyrics } from '../../../thunks/thunks'
 
 const Lyrics = () => {
   const [track, setTrack] = useState(null)
   const [lyrics, setLyrics] = useState(null)
 
+  const state = useContext(StateContext)
+  const dispatch = useContext(DispatchContext)
+
   const { trackId } = useParams()
   const history = useHistory()
 
   useEffect(() => {
-    axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${trackId}&apikey=${process.env.REACT_APP_MM_KEY}`
-      )
-      .then(res => {
-        setLyrics(res.data.message.body.lyrics)
-
-        return axios.get(
-          `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.get?track_id=${trackId}&apikey=${process.env.REACT_APP_MM_KEY}`
-        )
+    getLyrics(dispatch, trackId)
+      .then(data => {
+        setTrack(data.track)
+        setLyrics(data.lyrics)
       })
-      .then(res => setTrack(res.data.message.body.track))
-      .catch(err => console.error(err))
-  }, [trackId])
+  }, [trackId, dispatch])
 
-  if (!track) return <Spinner />
+  if (!track || state.isLoading) return <Spinner />
 
   return (
     <>
