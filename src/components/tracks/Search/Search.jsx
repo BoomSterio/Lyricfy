@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { Context } from '../../../context'
-import axios from 'axios'
+import { DispatchContext } from '../../../context'
+import { getTracksByQuery } from '../../../thunks/thunks'
 
 const ALL = '_track_artist'
 const TRACK = '_track'
@@ -10,29 +10,17 @@ const Search = () => {
   const [query, setQuery] = useState('')
   const [searchBy, setSearchBy] = useState(ALL)
 
-  const setGlobalState = useContext(Context)[1]
+  const dispatch = useContext(DispatchContext)
 
   const onChange = e => setQuery(e.target.value)
 
   const onSelect = e => setSearchBy(e.target.value)
 
-  const findTrack = (e) => {
+  const findTrack = e => {
     e.preventDefault()
 
-    axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?q${searchBy}=${query}&page_size=10&page=1&s_track_rating=desc&apikey=${process.env.REACT_APP_MM_KEY}`
-      )
-      .then(res => {
-        if(res.data.message.body.track_list.length === 0) alert('Nothing was found')
-
-        setGlobalState({
-          heading: 'Search Results',
-          trackList: res.data.message.body.track_list,
-        })
-        setQuery('')
-      })
-      .catch(err => console.error(err))
+    getTracksByQuery(dispatch, query, searchBy)
+    setQuery('')
   }
 
   return (
